@@ -9,6 +9,10 @@ public class InputManager : MonoBehaviour
 
     bool deleteMode = false;
 
+    bool isBuilding = false;
+
+    public LayerMask interactableLayer;
+
     private void Awake()
     {
         if(_instance == null)
@@ -32,9 +36,7 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         if (!EventSystem.current.IsPointerOverGameObject())
-            LeftClickCompute();
-
-        
+            LeftClickCompute();      
     }
 
     public bool GetDeleteMode()
@@ -51,20 +53,23 @@ public class InputManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if(!deleteMode)
+            if (isBuilding)
             {
                 Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3Int targetInt = new Vector3Int(Mathf.FloorToInt(target.x), Mathf.FloorToInt(target.y), 0);
 
                 //Grid._instance.GetTileDataAtClickedPosition(targetInt);
-                if(!Grid._instance.GetTileDataAtClickedPosition(targetInt).isFull)
+                if (!Grid._instance.GetTileDataAtClickedPosition(targetInt).isFull)
                     BuildManager._instance.InstantiateBuilding(targetInt);
             }
             else
             {
                 Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3Int targetInt = new Vector3Int(Mathf.FloorToInt(target.x), Mathf.FloorToInt(target.y), 0);
-                //Grid._instance.RemoveTile(targetInt);
+                RaycastHit2D hit = Physics2D.Raycast(target, -Vector3.forward, 1000f, interactableLayer);
+                if(hit.collider != null)
+                {
+                    hit.collider.gameObject.SendMessage("Interact");
+                }
             }
         }
     }
