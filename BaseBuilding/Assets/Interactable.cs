@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    private bool isInteractable;
+    protected bool isInteractable;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +20,7 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact()
     {
-        if(isInteractable)
-            Debug.Log("INTERACT");
+        Debug.Log("INTERACT");
     }
 
     public void SetIsInteractable(bool isInteractable)
