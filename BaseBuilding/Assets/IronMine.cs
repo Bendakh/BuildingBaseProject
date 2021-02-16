@@ -20,6 +20,8 @@ public class IronMine : Interactable
             AudioManager._instance.PlaySound(mineSoundEffect);
             GameManager._instance.AddRessource(RessourceType.IRON, 10);
             currentYield -= 10;
+            FloatingTextGenerator._instance.InstantiateFloatingText("+" + 10 + " iron", transform.position, Color.black, TMPro.FontStyles.Bold);
+            GameManager._instance.DepletePlayerEnergy(5);
         }
     }
 }

@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     PlayerScript player;
 
+    public PlayerScript Player { get => player; }
+
     private void Awake()
     {
         if (_instance == null)
@@ -33,6 +35,12 @@ public class GameManager : MonoBehaviour
 
     public void AddRessource(RessourceType ressourceType, int value)
     {
-        player.AddIronStock(value);
+        if(ressourceType == RessourceType.IRON)
+            player.AddIronStock(value);
+    }
+
+    public void DepletePlayerEnergy(int energyToDeplete)
+    {
+        this.player.energy -= energyToDeplete;
     }
 }
