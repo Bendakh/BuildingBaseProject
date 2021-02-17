@@ -9,17 +9,29 @@ public class PlayerScript : MonoBehaviour
     public int energy;
 
     private int ironStock;
+    private int woodStock;
 
     public int IronStock { get => ironStock; }
+    public int WoodStock { get => woodStock; }
 
     public void AddIronStock(int value)
     {
         this.ironStock += value;
     }
 
+    public void AddWoodStock(int value)
+    {
+        this.woodStock += value;
+    }
+
     public void DepleteIronStock(int value)
     {
         this.ironStock -= value;
+    }
+
+    public void DepleteWoodStock(int value)
+    {
+        this.woodStock -= value;
     }
 
     // Start is called before the first frame update

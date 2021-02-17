@@ -32,7 +32,7 @@ public class FloatingTextGenerator : MonoBehaviour
 
         //Transform dmgNumber = Instantiate(damageNumberPrefab, pos + randomOffset, Quaternion.identity).transform;
         Transform dmgNumber = Instantiate(floatingTextPrefab, floatingTextParent).transform;
-        dmgNumber.position += randomOffset;
+        dmgNumber.position = pos + randomOffset;
         dmgNumber.GetComponentInChildren<FloatingText>().Setup(textValue, color, fontStyle);
     }
 }

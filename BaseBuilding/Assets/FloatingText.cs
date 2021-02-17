@@ -6,16 +6,16 @@ using TMPro;
 public class FloatingText : MonoBehaviour
 {
 
-    private TextMeshPro damageText;
+    private TextMeshPro floatingText;
 
     private void Awake()
     {
-        damageText = transform.GetComponent<TextMeshPro>();
+        floatingText = transform.GetComponent<TextMeshPro>();
     }
     public void Setup(string textValue, Color color, FontStyles fontStyle)
     {
-        damageText.SetText(textValue);
-        damageText.color = color;
-        damageText.fontStyle = fontStyle;
+        floatingText.SetText(textValue);
+        floatingText.color = color;
+        floatingText.fontStyle = fontStyle;
     }
 }
