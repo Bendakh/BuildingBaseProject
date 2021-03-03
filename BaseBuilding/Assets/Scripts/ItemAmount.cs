@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum CostType
 {
@@ -9,10 +10,18 @@ public enum CostType
     GRASS
 }
 
-[SerializeField]
-public class Cost 
+[Serializable]
+public class ItemAmount
 {
-    public CostType costType;
-    public int costValue;
+    public ItemBase item;
+    [Range(1,999)]
+    public int itemNumber;
+}
 
+[Serializable]
+public class Cost
+{  
+    public CostType costType;
+    [Range(1,999)]
+    public int costValue;
 }

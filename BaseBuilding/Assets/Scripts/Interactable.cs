@@ -6,6 +6,8 @@ public class Interactable : MonoBehaviour
 {
     protected bool isInteractable;
 
+    public bool needsEnergy;
+
     // Start is called before the first frame update
     void Start()
     {
