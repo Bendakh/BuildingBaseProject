@@ -41,17 +41,28 @@ public class Inventory : MonoBehaviour, IItemContainer
                 slotsContainer.SetActive(false);
             
         }
+
+
+        if(!isUpdated)
+        {
+            UpdateInventory();
+        }
     }
 
-    public void DisplayInventory()
+    private void ResetInventory()
     {
         //Reset the inventory
         ItemSlot[] itemSlotList = slotsContainer.GetComponentsInChildren<ItemSlot>();
-        foreach(ItemSlot itemSlot in itemSlotList)
+        foreach (ItemSlot itemSlot in itemSlotList)
         {
             Destroy(itemSlot.gameObject);
         }
 
+    }
+
+    public void DisplayInventory()
+    {
+        //ResetInventory();
 
         slotsContainer.SetActive(true);
         if (!isUpdated)
@@ -65,6 +76,7 @@ public class Inventory : MonoBehaviour, IItemContainer
 
     private void UpdateInventory()
     {
+        ResetInventory();
         foreach (Item item in inventory)
         {
             ItemSlot itemSlot = Instantiate(slotPrefab, slotsContainer.transform).GetComponent<ItemSlot>();

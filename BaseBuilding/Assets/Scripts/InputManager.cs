@@ -53,7 +53,7 @@ public class InputManager : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if (isBuilding)
+            if (BuildManager._instance.buildingSelected)
             {
                 Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3Int targetInt = new Vector3Int(Mathf.FloorToInt(target.x), Mathf.FloorToInt(target.y), 0);
@@ -68,9 +68,15 @@ public class InputManager : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(target, -Vector3.forward, 1000f, interactableLayer);
                 if(hit.collider != null)
                 {
+                    Debug.Log(hit.collider.gameObject);
                     hit.collider.gameObject.SendMessage("Interact");
                 }
             }
+        }
+
+        if(Input.GetMouseButtonDown(1) && BuildManager._instance.buildingSelected)
+        {
+            BuildManager._instance.SetNoSelectedBuildable();
         }
     }
 }

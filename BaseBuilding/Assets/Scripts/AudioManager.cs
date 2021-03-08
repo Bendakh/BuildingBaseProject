@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(Sound sound)
     {
-        Debug.Log("test");
+        
         audioSource.clip = sound.clip;
         audioSource.volume = sound.volume;
         audioSource.pitch = sound.pitch;

@@ -8,9 +8,11 @@ public class BuildManager : MonoBehaviour
 
 
     [SerializeField]
-    GameObject selectedBuilding;
+    GameObject selectedBuilding = null;
 
-    public bool buildingSelected = true;
+    public GameObject SelectedBuilding { get => selectedBuilding; }
+
+    public bool buildingSelected = false;
 
     private void Awake()
     {
@@ -27,12 +29,25 @@ public class BuildManager : MonoBehaviour
 
     public void InstantiateBuilding(Vector3Int targetPosition)
     {
-        Instantiate(selectedBuilding, targetPosition + new Vector3(0.5f, 0.5f, 0f), Quaternion.identity);
-        Grid._instance.SetTileFull(targetPosition);
+        if (selectedBuilding.GetComponent<Building>().CanBuild(GameManager._instance.Player.GetInventory()))
+        {
+            GameObject newBuilding = Instantiate(selectedBuilding, targetPosition + new Vector3(0.5f, 0.5f, 0f), Quaternion.identity);
+            newBuilding.SendMessage("Build", GameManager._instance.Player.GetInventory());
+            Grid._instance.SetTileFull(targetPosition);
+        }
     }
 
     public void SetSelectedBuildable(GameObject buildablePrefab)
     {
         this.selectedBuilding = buildablePrefab;
+        this.buildingSelected = true;
+
+        CursorScript._instance.SetOptionalCursorSprite(buildablePrefab.GetComponent<SpriteRenderer>().sprite);
+    }
+
+    public void SetNoSelectedBuildable()
+    {
+        this.selectedBuilding = null;
+        this.buildingSelected = false;
     }
 }

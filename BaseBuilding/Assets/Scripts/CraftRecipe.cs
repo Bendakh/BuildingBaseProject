@@ -11,30 +11,23 @@ public class CraftRecipe : ScriptableObject
 
     public bool CanCraft(IItemContainer inv)
     {
-        bool isPrimaryMaterialsAvailable = true;
-        bool isItemMaterialsAvailable = true;
-
         foreach(Cost primMat in primaryMaterials)
         {
             if(!GameManager._instance.Player.IsThereEnoughResource(primMat.costType,primMat.costValue))
             {
-                isPrimaryMaterialsAvailable = false;
+                return false;
             }
         }
 
         foreach(ItemAmount itemAmount in itemMaterials)
-        {
-            
+        {    
             if(inv.ItemCountById(itemAmount.item.id) < itemAmount.itemNumber)
             {
-                isItemMaterialsAvailable = false;
+                return false;
             }
         }
 
-        if (isPrimaryMaterialsAvailable && isItemMaterialsAvailable)
-            return true;
-        else
-            return false;
+        return true;
     }
 
     public void Craft(IItemContainer inv)
@@ -57,8 +50,7 @@ public class CraftRecipe : ScriptableObject
             foreach(ItemAmount itemAmount in results)
             {
                 for(int i = 0; i < itemAmount.itemNumber; i++)
-                {
-                    
+                {            
                     inv.AddItem(itemAmount.item.GetCopy());
                 }
             }           

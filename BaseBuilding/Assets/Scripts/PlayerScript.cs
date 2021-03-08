@@ -25,6 +25,11 @@ public class PlayerScript : MonoBehaviour
         this.woodStock += value;
     }
 
+    public void AddGrassStock(int value)
+    {
+        this.grassStock += value;
+    }
+
     public void DepleteIronStock(int value)
     {
         this.ironStock -= value;

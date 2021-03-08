@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
             player.AddIronStock(value);
         if (ressourceType == RessourceType.WOOD)
             player.AddWoodStock(value);
+        if (ressourceType == RessourceType.GRASS)
+            player.AddGrassStock(value);
     }
 
     public void DepletePlayerEnergy(int energyToDeplete)
