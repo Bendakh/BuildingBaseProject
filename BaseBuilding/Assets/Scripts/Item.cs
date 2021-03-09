@@ -6,12 +6,17 @@ using UnityEngine;
 [Serializable]
 public class Item 
 {
-    private ItemBase itemBase;
+    protected ItemBase itemBase;
     public ItemBase ItemBase { get => itemBase; }
 
 
     public Item(ItemBase itemBase)
     {
         this.itemBase = itemBase;
+    }
+
+    public virtual void Use()
+    {
+        Debug.Log("Using!");
     }
 }

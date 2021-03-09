@@ -9,7 +9,6 @@ public class ItemBase : ScriptableObject
     [SerializeField] string strindId;
     public string itemName = "New Item";
     public Sprite icon = null;
-    
 
     private void OnValidate()
     {
@@ -17,7 +16,7 @@ public class ItemBase : ScriptableObject
         strindId = UnityEditor.AssetDatabase.AssetPathToGUID(path);
     }
 
-    public Item GetCopy()
+    public virtual Item GetCopy()
     {
         Item item = new Item(this);
         return item;

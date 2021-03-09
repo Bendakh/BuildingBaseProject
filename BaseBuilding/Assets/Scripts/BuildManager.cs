@@ -35,6 +35,10 @@ public class BuildManager : MonoBehaviour
             newBuilding.SendMessage("Build", GameManager._instance.Player.GetInventory());
             Grid._instance.SetTileFull(targetPosition);
         }
+        else
+        {
+            UIManager._instance.SetErrorMessage("Not enough resources!");
+        }
     }
 
     public void SetSelectedBuildable(GameObject buildablePrefab)

@@ -6,6 +6,8 @@ public class PlayerScript : MonoBehaviour
 {
 
     public bool isTired;
+    //change this to stats
+    public int health;
     public int energy;
 
     private int ironStock;
@@ -14,6 +16,8 @@ public class PlayerScript : MonoBehaviour
 
     public int IronStock { get => ironStock; }
     public int WoodStock { get => woodStock; }
+
+    public int GrassStock { get => grassStock; }
 
     public void AddIronStock(int value)
     {
@@ -90,6 +94,26 @@ public class PlayerScript : MonoBehaviour
         }
 
         return isEnough;
+    }
+
+    public void Consume(ConsumableItem consumableItem)
+    {
+        
+        foreach(ConsumableValue cv in consumableItem.ConsumableValues)
+        {
+            switch(cv.ConsumableTarget)
+            {
+                case EnumTypes.ConsumablesValuesTypes.HEALTH:
+                    health += cv.Value;
+                    break;
+                case EnumTypes.ConsumablesValuesTypes.ENERGY:
+                    energy += cv.Value;
+                    break;
+            }
+        }
+
+        GetInventory().RemoveItem(consumableItem);
+        //check garbage collector to destroy the item
     }
 
     // Start is called before the first frame update

@@ -105,6 +105,7 @@ public class Inventory : MonoBehaviour, IItemContainer
     {
         if (ContainsItem(item))
         {
+            isUpdated = false;
             return inventory.Remove(item);
         }
         else

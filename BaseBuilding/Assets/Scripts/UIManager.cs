@@ -6,20 +6,27 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager _instance;
 
-    [SerializeField]
-    Image energyBar;
+    [SerializeField] Image energyBar;
 
-    [SerializeField]
-    TextMeshProUGUI ironStockValue;
+    [SerializeField] TextMeshProUGUI ironStockValue;
+    [SerializeField] TextMeshProUGUI woodStockValue;
+    [SerializeField] TextMeshProUGUI grassStockValue;
 
-    [SerializeField]
-    TextMeshProUGUI woodStockValue;
+    [SerializeField] TextMeshProUGUI errorMessages;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        if(_instance == null)
+        {
+            _instance = this;
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -28,5 +35,18 @@ public class UIManager : MonoBehaviour
         energyBar.fillAmount = (float) GameManager._instance.Player.energy / 100f;
         ironStockValue.text = GameManager._instance.Player.IronStock.ToString();
         woodStockValue.text = GameManager._instance.Player.WoodStock.ToString();
+        grassStockValue.text = GameManager._instance.Player.GrassStock.ToString();
+    }
+
+    public void SetErrorMessage(string errorMessage)
+    {
+        errorMessages.text = errorMessage;
+        StartCoroutine(ResetErrorMessages(2f));
+    }
+
+    IEnumerator ResetErrorMessages(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        errorMessages.text = "";
     }
 }

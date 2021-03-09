@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour/*, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler*/
+public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField]
     Image itemIcon;
@@ -45,24 +45,29 @@ public class ItemSlot : MonoBehaviour/*, IPointerEnterHandler, IPointerExitHandl
         itemIcon.sprite = item.icon;
     }*/
 
-    /*public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        UIManager._instance.DisplayItemPanel(itemStocked);
-    }*/
+        //UIManager._instance.DisplayItemPanel(itemStocked);
+        //Debug.Log("--------------- + " + itemStocked);
+        if (itemStocked.GetType() == typeof(ConsumableItem))
+        {   
+            GameManager._instance.Player.Consume((ConsumableItem)itemStocked);
+        }
+    }
 
-    /*public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Display");
-        iid = Instantiate(itemInformationPanelPrefab, this.gameObject.transform.parent.parent).GetComponent<ItemInformationDisplay>();
-        iid.DisplayItem(itemStocked);
+        Debug.Log("Display" + itemStocked.ItemBase.itemName);
+        //iid = Instantiate(itemInformationPanelPrefab, this.gameObject.transform.parent.parent).GetComponent<ItemInformationDisplay>();
+        //iid.DisplayItem(itemStocked);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Hide");
-        if (iid != null)
+        Debug.Log("Hide" + itemStocked.ItemBase.itemName);
+        /*if (iid != null)
         {
             Destroy(iid.gameObject);
-        }
-    }*/
+        }*/
+    }
 }
