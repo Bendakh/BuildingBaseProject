@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI errorMessages;
 
+    [SerializeField] ToolTipPanel toolTipPanel;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,6 +44,18 @@ public class UIManager : MonoBehaviour
     {
         errorMessages.text = errorMessage;
         StartCoroutine(ResetErrorMessages(2f));
+    }
+
+    public void DisplayToolTipPanel(Item item)
+    {
+        toolTipPanel.gameObject.SetActive(true);
+        toolTipPanel.DisplayToolTipPanel(item);
+    }
+
+    public void HideToolTipPanel()
+    {
+        toolTipPanel.ResetToolTipPanel();
+        toolTipPanel.gameObject.SetActive(false);
     }
 
     IEnumerator ResetErrorMessages(float delay)

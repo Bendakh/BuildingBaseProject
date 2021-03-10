@@ -22,7 +22,6 @@ public class Inventory : MonoBehaviour, IItemContainer
 
     private void Start()
     {
-        //AddItem(ItemDatabaseManager._instance.CreateItemById(0));
         isInventoryDisplayed = false;
         isUpdated = false;
 
@@ -79,8 +78,19 @@ public class Inventory : MonoBehaviour, IItemContainer
         ResetInventory();
         foreach (Item item in inventory)
         {
-            ItemSlot itemSlot = Instantiate(slotPrefab, slotsContainer.transform).GetComponent<ItemSlot>();
-            itemSlot.SetItemStocked(item);
+            //int amount = ItemCountById(item.ItemBase.id);
+
+            if(item.ItemBase.maximumStacks > 1)
+            {
+                ItemSlot stackableItemSlot = Instantiate(slotPrefab, slotsContainer.transform).GetComponent<ItemSlot>();
+                stackableItemSlot.Amount = ItemCountById(item.ItemBase.id);
+                stackableItemSlot.SetItemStocked(item);
+            }
+            else
+            {
+                ItemSlot itemSlot = Instantiate(slotPrefab, slotsContainer.transform).GetComponent<ItemSlot>();
+                itemSlot.SetItemStocked(item);
+            }          
         }
 
         isUpdated = true;
@@ -101,23 +111,34 @@ public class Inventory : MonoBehaviour, IItemContainer
             return false;
     }
 
-    public bool RemoveItem(Item item)
+
+    /*public bool RemoveItem(Item item)
     {
         if (ContainsItem(item))
-        {
-            isUpdated = false;
-            return inventory.Remove(item);
+        {           
+                isUpdated = false;
+                return inventory.Remove(item);          
         }
         else
             return false;
-    }
+    }*/
 
     public bool RemoveItem(ItemBase itemBase)
     {
         Item item = inventory.Find(i => i.ItemBase.id == itemBase.id);
         if (item != null)
         {
-            return inventory.Remove(item);
+            if(item.Amount > 1)
+            {
+                item.Amount--;
+                isUpdated = false;
+                return true;
+            }
+            else
+            {
+                isUpdated = false;
+                return inventory.Remove(item);
+            }
         }
         else
             return false;
@@ -127,14 +148,25 @@ public class Inventory : MonoBehaviour, IItemContainer
     {
         if (inventory.Count < inventoryCapacity)
         {
-            inventory.Add(item);
-            isUpdated = false;
-            return true;
+            if(ItemCountById(item.ItemBase.id) > 0 && item.ItemBase.maximumStacks > 1)
+            {   
+                Item itemToIncrement = inventory.Find(i => i.ItemBase.id == item.ItemBase.id);
+                itemToIncrement.Amount++;
+                isUpdated = false;
+                return true;
+            }
+            else
+            {
+                inventory.Add(item);
+                item.Amount = 1;
+                isUpdated = false;
+                return true;
+            }      
         }
         else
         {
             return false;
-        }  
+        }      
     }
 
     public bool IsFull()

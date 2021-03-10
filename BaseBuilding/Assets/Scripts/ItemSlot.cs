@@ -3,16 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField]
-    Image itemIcon;
+
+    [SerializeField] Image itemIcon;
+    [SerializeField] TextMeshProUGUI itemAmount;
 
     Item itemStocked;
 
-    //[SerializeField]
-    //GameObject itemInformationPanelPrefab;
+    private int amount;
+    public int Amount
+    {
+        get { return amount; }
+        set
+        {
+            amount = value;
+            //itemAmount.enabled = itemStocked != null && itemStocked.ItemBase.maximumStacks > 1 && amount > 1;
+            if (itemAmount.enabled)
+            {
+                itemAmount.text = amount.ToString();
+            }
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (itemIcon == null)
+            itemIcon = GetComponentInChildren<Image>();
+
+        if (itemAmount == null)
+            itemAmount = GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     //[SerializeField]
     //GameObject itemEquipedIndicator;
@@ -28,6 +51,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if(itemStocked != null)
         {
             this.itemIcon.sprite = this.itemStocked.ItemBase.icon;
+            if(itemStocked.Amount > 1)
+            {
+                Amount = itemStocked.Amount;
+            }
+            else
+            {
+                itemAmount.text = "";
+            }
         }
     }
 
@@ -47,27 +78,25 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //UIManager._instance.DisplayItemPanel(itemStocked);
-        //Debug.Log("--------------- + " + itemStocked);
         if (itemStocked.GetType() == typeof(ConsumableItem))
         {   
             GameManager._instance.Player.Consume((ConsumableItem)itemStocked);
         }
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Display" + itemStocked.ItemBase.itemName);
-        //iid = Instantiate(itemInformationPanelPrefab, this.gameObject.transform.parent.parent).GetComponent<ItemInformationDisplay>();
-        //iid.DisplayItem(itemStocked);
+        UIManager._instance.DisplayToolTipPanel(this.itemStocked);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Hide" + itemStocked.ItemBase.itemName);
-        /*if (iid != null)
-        {
-            Destroy(iid.gameObject);
-        }*/
+        UIManager._instance.HideToolTipPanel();
+    }
+
+    private void OnDestroy()
+    {
+        UIManager._instance.HideToolTipPanel();
     }
 }

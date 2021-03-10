@@ -9,6 +9,8 @@ public class Item
     protected ItemBase itemBase;
     public ItemBase ItemBase { get => itemBase; }
 
+    private int amount;
+    public int Amount { get => amount; set => amount = value; }
 
     public Item(ItemBase itemBase)
     {

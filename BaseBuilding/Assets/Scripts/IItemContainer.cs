@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IItemContainer 
 {
     bool ContainsItem(Item item);
-    bool RemoveItem(Item item);
+    //bool RemoveItem(Item item);
     bool RemoveItem(ItemBase itemBase);
     bool AddItem(Item item);
     bool IsFull();

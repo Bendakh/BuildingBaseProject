@@ -112,7 +112,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        GetInventory().RemoveItem(consumableItem);
+        GetInventory().RemoveItem(consumableItem.ItemBase);
         //check garbage collector to destroy the item
     }
 

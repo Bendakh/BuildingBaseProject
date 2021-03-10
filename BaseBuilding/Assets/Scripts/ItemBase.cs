@@ -10,6 +10,8 @@ public class ItemBase : ScriptableObject
     public string itemName = "New Item";
     public Sprite icon = null;
 
+    [Range(1, 9999)] public int maximumStacks;
+
     private void OnValidate()
     {
         string path = UnityEditor.AssetDatabase.GetAssetPath(this);

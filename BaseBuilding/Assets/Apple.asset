@@ -16,6 +16,7 @@ MonoBehaviour:
   strindId: e7d9ed528f3bf8349837ac174a5c638a
   itemName: Apple
   icon: {fileID: 21300000, guid: 01ac89c16c27e0242981c516a33ee820, type: 3}
+  maximumStacks: 9999
   consumableValues:
   - consumableTarget: 1
     value: 20
