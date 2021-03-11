@@ -9,6 +9,7 @@ public class InventoryShortcuts : MonoBehaviour
     Item itemShortcutted;
 
     public Item ItemShortcutted { get => itemShortcutted; }
+    public List<InventoryShortcutSlot> InventoryShortcutSlots { get => inventoryShortcutSlots; }
 
     // Update is called once per frame
     void Update()
@@ -17,13 +18,26 @@ public class InventoryShortcuts : MonoBehaviour
             UseShortcutItem();
     }
 
-    public void SetItemShortcutted(Item itemToShortcut)
+    /*public void SetItemShortcutted(Item itemToShortcut)
     {
         this.itemShortcutted = itemToShortcut;
-    }
+    }*/
 
     public void UseShortcutItem()
     {
         itemShortcutted.Use();
+    }
+
+    public RectTransform GetHoveredShortcut()
+    {
+        foreach(InventoryShortcutSlot iss in inventoryShortcutSlots)
+        {
+            if(iss.ShortcutSlotHovered())
+            {
+                return iss.transform as RectTransform;
+            }
+        }
+
+        return null;
     }
 }

@@ -55,12 +55,15 @@ public class Building : Interactable
 
     public override void Interact()
     {
-        base.Interact();
-        GameManager._instance.DepletePlayerEnergy(energyCost);
-        buildValue += 5;
-        if(IsBuildingComplete())
+        if (isInteractable && GameManager._instance.Player.CurrentEnergy >= this.energyCost)
         {
-            FinaliseBuilding();
+            base.Interact();
+            GameManager._instance.DepletePlayerEnergy(energyCost);
+            buildValue += 5;
+            if (IsBuildingComplete())
+            {
+                FinaliseBuilding();
+            }
         }
     }
 

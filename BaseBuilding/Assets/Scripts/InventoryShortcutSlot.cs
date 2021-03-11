@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class InventoryShortcutSlot : MonoBehaviour
 {
+    [SerializeField] KeyCode keyCodeShortcut;
+
     Item stockedItem;
 
     [SerializeField] InventoryShortcuts inventoryShortcutContainer;
 
+    [SerializeField] Image imageIcon;
+
     public Item StockedItem { get => stockedItem; }
 
-    bool isUsed;
+    bool isUsed = false;
 
     Button iconShortcutButton;
 
@@ -20,7 +24,8 @@ public class InventoryShortcutSlot : MonoBehaviour
         if (!isUsed)
         {
             this.stockedItem = itemToStock;
-            iconShortcutButton.onClick.AddListener(() => SetShortcutToItem());
+            //iconShortcutButton.onClick.AddListener(() => SetShortcutToItem());
+            imageIcon.sprite = itemToStock.ItemBase.icon;
             isUsed = true;
         }
     }
@@ -32,8 +37,30 @@ public class InventoryShortcutSlot : MonoBehaviour
         isUsed = false;
     }
 
-    private void SetShortcutToItem()
+    public bool ShortcutSlotHovered()
+    {
+        if (RectTransformUtility.RectangleContainsScreenPoint(this.transform as RectTransform, Input.mousePosition))
+        {
+            Debug.Log(this.gameObject.name + " hovered");
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(keyCodeShortcut))
+        {
+            stockedItem.Use();
+        }
+    }
+
+
+    /*private void SetShortcutToItem()
     {
         inventoryShortcutContainer.SetItemShortcutted(this.stockedItem);
-    }
+    }*/
+
+
 }

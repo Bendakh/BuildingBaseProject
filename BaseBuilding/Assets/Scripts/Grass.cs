@@ -13,7 +13,7 @@ public class Grass : Interactable
     
     public override void Interact()
     {
-        if(isInteractable && GameManager._instance.Player.energy >= this.energyCost)
+        if(isInteractable && GameManager._instance.Player.CurrentEnergy >= this.energyCost)
         {
             base.Interact();
             //AudioManager._instance.PlaySound(grassCuttingSoundEffect);

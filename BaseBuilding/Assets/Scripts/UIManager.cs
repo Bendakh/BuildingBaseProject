@@ -18,6 +18,10 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] ToolTipPanel toolTipPanel;
 
+    [SerializeField] InventoryShortcuts inventoryShortcuts;
+
+    public InventoryShortcuts InventoryShortcuts { get => inventoryShortcuts; } 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,7 +38,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        energyBar.fillAmount = (float) GameManager._instance.Player.energy / 100f;
+        energyBar.fillAmount = (float) GameManager._instance.Player.CurrentEnergy / 100f;
         ironStockValue.text = GameManager._instance.Player.IronStock.ToString();
         woodStockValue.text = GameManager._instance.Player.WoodStock.ToString();
         grassStockValue.text = GameManager._instance.Player.GrassStock.ToString();

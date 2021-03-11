@@ -14,6 +14,7 @@ public enum StatModType
 public enum TargetStat
 {
     HEALTH,
+    ENERGY,
     ATTACK,
     DEFENSE,
     ATTACKSPEED,

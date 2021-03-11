@@ -45,6 +45,6 @@ public class GameManager : MonoBehaviour
 
     public void DepletePlayerEnergy(int energyToDeplete)
     {
-        this.player.energy -= energyToDeplete;
+        this.player.DepleteEnergy(energyToDeplete);
     }
 }
